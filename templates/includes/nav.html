@@ -1,0 +1,18 @@
+{% load static %}
+                <!-- START SIDEBAR -->
+                <div class="app-sidebar app-navigation app-navigation-fixed scroll app-navigation-style-default app-navigation-open-hover dir-left" data-type="close-other" data-minimized="minimized">
+                    <a href="index.html" class="app-navigation-logo">
+                    </a>
+                    <nav>
+                        <ul>
+                            <li class="title">Cobranza</li>
+                            <li>
+                                <a href="{% url 'creditos:credit_detail' 'FS' '1-3200-2145' %}"><span class="nav-icon-hexa">In</span> Inicio</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'dashboard:dashboardManager' %}"><span class="nav-icon-hexa">Ds</span> DASHBOARD </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <!-- END SIDEBAR -->
