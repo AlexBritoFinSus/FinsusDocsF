@@ -1,3 +1,4 @@
+{% load static %}
 <!-- START APP HEADER -->
                     <div class="app-header app-header-design-default">
                         <ul class="app-header-buttons">
@@ -12,8 +13,8 @@
                             <li>
                                 <div class="contact contact-rounded contact-bordered contact-lg contact-ps-controls hidden-xs">
                                     <div class="contact-container">
-                                        <a href="#">aaaaa</a>
-                                        <span>aaaaaaa</span>
+                                        <a href="#">{{  request.user.username }}</a>
+                                        <span>{{ request.user.email }}</span>
                                     </div>
                                 </div>
                             </li>
