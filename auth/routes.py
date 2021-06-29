@@ -1,13 +1,9 @@
 import os
 import secrets
-# from PIL import Image
 from flask import render_template, request
 from auth import app
-# from auth.forms import *
-# from plotly.offline import plot
-# import plotly.graph_objs as go
 from flask import Markup
-# from auth.models import *
+from auth.forms import *
 
 @app.route("/signIn")
 def loginForm():
@@ -19,6 +15,7 @@ def loginForm():
 
 @app.route("/login", methods=['POST', 'GET'])
 def login():
+    print(request.form)
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
@@ -29,7 +26,7 @@ def login():
             return redirect(url_for('root'))
         else:
             error = 'Invalid UserId / Password'
-            return render_template('login.html', error=error)
+            return render_template('pages/login.html', error=error)
 
 
 @app.route("/logout")
@@ -38,28 +35,15 @@ def logout():
     return redirect(url_for('root'))
 
 
-# @app.route("/registerationForm")
-# def registrationForm():
-#     return render_template("register.html")
-
-
-# @app.route("/register", methods=['GET', 'POST'])
-# def register():
-#     if request.method == 'POST':
-#         # Parse form data
-#         msg = extractAndPersistUserDataFromForm(request)
-#         return render_template("login.html", error=msg)
-
-
 @app.route("/")
-@app.route("/login", methods=['POST', 'GET'])
 def root():
+    loggedIn, firstName = getLoginUserDetails()
+    return render_template('pages/login.html')
     # loggedIn, firstName, productCountinKartForGivenUser = getLoginUserDetails()
     # allProductDetails = getAllProducts()
     # allProductsMassagedDetails = massageItemData(allProductDetails)
     # categoryData = getCategoryDetails()
 
-    return render_template('pages/login.html')
 
 
 # @app.route("/displayCategory")

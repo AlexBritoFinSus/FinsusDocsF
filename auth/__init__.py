@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
+import pyodbc 
 import urllib.parse
 # from flask_mysqldb import MySQL
 # import yaml
@@ -15,9 +16,10 @@ params = urllib.parse.quote_plus("DRIVER={SQL Server};SERVER=bi-finsus.database.
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "mssql+pyodbc:///?odbc_connect=%s" % params
-app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
+app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280bsqweqwewqedcadsa245'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://shend:root@localhost/ecommerce'
-# db = SQLAlchemy(app)
+db = SQLAlchemy(app)
 # bcrypt = Bcrypt(app)
 # app.secret_key = 'random string'
 # UPLOAD_FOLDER = 'static/uploads'

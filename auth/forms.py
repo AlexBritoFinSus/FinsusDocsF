@@ -2,6 +2,7 @@ import hashlib
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+import bcrypt
 
 from flask import session
 from flask import url_for, flash, redirect
@@ -10,41 +11,22 @@ from wtforms import StringField, SubmitField, TextAreaField, IntegerField, Radio
 from flask_wtf.file import FileField, FileAllowed
 from wtforms.validators import DataRequired, Length, Email
 
-from auth import mysql
+from auth import db
 from auth.models import *
 
 
-def getAllProducts():
-    itemData = Product.query.join(ProductCategory, Product.productid == ProductCategory.productid) \
-        .add_columns(Product.productid, Product.product_name, Product.discounted_price, Product.description,
-                     Product.image, Product.quantity) \
-        .join(Category, Category.categoryid == ProductCategory.categoryid) \
-        .order_by(Category.categoryid.desc()) \
-        .all()
-    return itemData
-
-
-def getCategoryDetails():
-    itemData = Category.query.join(ProductCategory, Category.categoryid == ProductCategory.categoryid) \
-        .join(Product, Product.productid == ProductCategory.productid) \
-        .order_by(Category.categoryid.desc()) \
-        .distinct(Category.categoryid) \
-        .all()
-    return itemData
-
-
-def massageItemData(data):
-    ans = []
-    i = 0
-    while i < len(data):
-        curr = []
-        for j in range(6):
-            if i >= len(data):
-                break
-            curr.append(data[i])
-            i += 1
-        ans.append(curr)
-    return ans
+# def massageItemData(data):
+#     ans = []
+#     i = 0
+#     while i < len(data):
+#         curr = []
+#         for j in range(6):
+#             if i >= len(data):
+#                 break
+#             curr.append(data[i])
+#             i += 1
+#         ans.append(curr)
+#     return ans
 
 
 def is_valid(email, password):
@@ -52,19 +34,23 @@ def is_valid(email, password):
     # data = User.query.with_entities(User.email, User.password).all()
 
     # Using Raw SQL Select Query
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT email, password FROM user")
-    userData = cur.fetchall()
-    cur.close()
+    userData = db.session.query(User).filter( User.email == email).first()
+    # password = password.encode()
+    # sal = bcrypt.gensalt()
+    # passHash = bcrypt.hashpw(password, sal)
+    print(userData.password)
+    if bcrypt.checkpw(b'302010',b'$2y$10$20l2aC6kIyltpgWLmp80n.4itLhmoP58CU80m1m/ukE8TZYJAASx.'):
+        print("match")
+    else:
+        print("does not match")
 
-    for row in userData:
-        if row['email'] == email and row['password'] == hashlib.md5(password.encode()).hexdigest():
-            return True
-    return False
+    if userData.email == email and userData.password == hashlib.md5(password.encode()).hexdigest():
+        return True
+    else:
+        return False
 
 
 def getLoginUserDetails():
-    productCountinCartForGivenUser = 0
 
     if 'email' not in session:
         loggedIn = False
@@ -74,19 +60,7 @@ def getLoginUserDetails():
         userid, firstName = User.query.with_entities(User.userid, User.fname).filter(
             User.email == session['email']).first()
 
-        productCountinCart = []
-
-        # for Cart in Cart.query.filter(Cart.userId == userId).distinct(Products.productId):
-        for cart in Cart.query.filter(Cart.userid == userid).all():
-            productCountinCart.append(cart.productid)
-            productCountinCartForGivenUser = len(productCountinCart)
-
-    return (loggedIn, firstName, productCountinCartForGivenUser)
-
-
-def getProductDetails(productId):
-    productDetailsById = Product.query.filter(Product.productid == productId).first()
-    return productDetailsById
+    return (loggedIn, firstName)
 
 
 def extractAndPersistUserDataFromForm(request):
