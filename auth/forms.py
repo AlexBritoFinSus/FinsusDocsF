@@ -38,11 +38,11 @@ def is_valid(email, password):
     # password = password.encode()
     # sal = bcrypt.gensalt()
     # passHash = bcrypt.hashpw(password, sal)
-    print(userData.password)
-    if bcrypt.checkpw(b'302010',b'$2y$10$20l2aC6kIyltpgWLmp80n.4itLhmoP58CU80m1m/ukE8TZYJAASx.'):
-        print("match")
-    else:
-        print("does not match")
+    # print(userData.password)
+    # if bcrypt.checkpw(b'302010',b'$2y$10$20l2aC6kIyltpgWLmp80n.4itLhmoP58CU80m1m/ukE8TZYJAASx.'):
+    #     print("match")
+    # else:
+    #     print("does not match")
 
     if userData.email == email and userData.password == hashlib.md5(password.encode()).hexdigest():
         return True
