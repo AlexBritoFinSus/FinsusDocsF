@@ -12,14 +12,14 @@ import urllib.parse
 # # logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
 # # SQLALCHEMY_TRACK_MODIFICATIONS = True
 # ######## Enable this for debugging #########
-params = urllib.parse.quote_plus("DRIVER={SQL Server};SERVER=bi-finsus.database.windows.net;DATABASE=bi-finsus;UID=samuel;PWD=Adminfinsus1")
+# params = urllib.parse.quote_plus("DRIVER={SQL Server};SERVER=bi-finsus.database.windows.net;DATABASE=bi-finsus;UID=samuel;PWD=Adminfinsus1")
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "mssql+pyodbc:///?odbc_connect=%s" % params
-app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280bsqweqwewqedcadsa245'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://shend:root@localhost/ecommerce'
-db = SQLAlchemy(app)
+# app = Flask(__name__)
+# app.config['SQLALCHEMY_DATABASE_URI'] = "mssql+pyodbc:///?odbc_connect=%s" % params
+# app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280bsqweqwewqedcadsa245'
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://shend:root@localhost/ecommerce'
+# db = SQLAlchemy(app)
 # bcrypt = Bcrypt(app)
 # app.secret_key = 'random string'
 # UPLOAD_FOLDER = 'static/uploads'

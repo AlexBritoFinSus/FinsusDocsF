@@ -12,7 +12,7 @@ from flask_wtf.file import FileField, FileAllowed
 from wtforms.validators import DataRequired, Length, Email
 
 from auth import db
-from auth.models import *
+# from auth.models import *
 
 
 # def massageItemData(data):

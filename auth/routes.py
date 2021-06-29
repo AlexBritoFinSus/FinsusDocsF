@@ -3,7 +3,7 @@ import secrets
 from flask import render_template, request
 from auth import app
 from flask import Markup
-from auth.forms import *
+# from auth.forms import *
 
 @app.route("/signIn")
 def loginForm():
@@ -15,17 +15,16 @@ def loginForm():
 
 @app.route("/login", methods=['POST', 'GET'])
 def login():
-    print(request.form)
-    if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
-        if is_valid(email, password):
-            session['email'] = email
-            if isUserAdmin():
-                return redirect('admin')
-            return redirect(url_for('root'))
-        else:
-            error = 'Invalid UserId / Password'
+    # if request.method == 'POST':
+    #     email = request.form['email']
+    #     password = request.form['password']
+    #     if is_valid(email, password):
+    #         session['email'] = email
+    #         if isUserAdmin():
+    #             return redirect('admin')
+    #         return redirect(url_for('root'))
+    #     else:
+    #         error = 'Invalid UserId / Password'
             return render_template('pages/login.html', error=error)
 
 
@@ -37,7 +36,7 @@ def logout():
 
 @app.route("/")
 def root():
-    loggedIn, firstName = getLoginUserDetails()
+    # loggedIn, firstName = getLoginUserDetails()
     return render_template('pages/login.html')
     # loggedIn, firstName, productCountinKartForGivenUser = getLoginUserDetails()
     # allProductDetails = getAllProducts()
